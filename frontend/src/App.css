@@ -1,0 +1,14 @@
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.add-users .form-group{
+  margin: 0.5rem;
+}
+
+.error-text{
+  color: red;
+}
