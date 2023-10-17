@@ -30,24 +30,20 @@ function Dashboard() {
 				<div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
 					<div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
 						<a href="/" className="d-flex align-items-center pb-3 mb-md-1 mt-md-3 me-md-auto text-white text-decoration-none">
-							<span className="fs-5 fw-bolder d-none d-sm-inline">Admin Dashboard</span>
+							<span className="fs-5 fw-bolder d-none d-sm-inline">Dashboard</span>
 						</a>
 						<ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
 							<li>
 								<Link to="/" data-bs-toggle="collapse" className="nav-link text-white px-0 align-middle">
-									<i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Dashboard</span> </Link>
+									<i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Home</span> </Link>
 							</li>
 							<li>
 								<Link to="/users" className="nav-link px-0 align-middle text-white">
-									<i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Manage Users</span> </Link>
+								<i class="bi bi-file-earmark-image-fill"></i><span className="ms-1 d-none d-sm-inline">Designs</span> </Link>
 							</li>
-                            {/* <li>
-								<Link to="/prediction" className="nav-link px-0 align-middle text-white">
-                                <i className="fs-4 bi bi-bar-chart"></i> <span className="ms-1 d-none d-sm-inline">Prediction</span> </Link>
-							</li> */}
 							<li>
-								<Link to="/predictioncolombo" className="nav-link px-0 align-middle text-white">
-                                <i className="fs-4 bi bi-bar-chart"></i> <span className="ms-1 d-none d-sm-inline">Prediction Colombo</span> </Link>
+								<Link to="/lineprediction" className="nav-link px-0 align-middle text-white">
+                                <i className="fs-4 bi bi-bar-chart"></i> <span className="ms-1 d-none d-sm-inline">Line Prediction</span> </Link>
 							</li>
 							<li onClick={handleLogout}>
 								<a href="" className="nav-link px-0 align-middle text-white">
