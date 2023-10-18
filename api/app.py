@@ -8,17 +8,17 @@ app = Flask(__name__)
 model_filename = 'random_forest_model.joblib'
 clf = load(model_filename)
 
-# Load the LabelEncoder used during training for 'Product Type'
+# Load the LabelEncoders used during training
 le_product = load('product_type_label_encoder.joblib')
-
-# Load the LabelEncoder used during training for 'Module'
 le_module = load('module_label_encoder.joblib')
 
-# Load the data to calculate Total SMV
-data = pd.read_csv('new_dataset_filled.csv')  # Replace with the actual path to your dataset file
+# Load the dataset
+# data_set = pd.read_csv('new_dataset_filled.csv')
 
 @app.route('/predict', methods=['POST'])
 def predict_module():
+    data_set = pd.read_csv('new_dataset_filled.csv')
+
     data = request.get_json()
     product_type = data['product_type']
 
@@ -32,15 +32,21 @@ def predict_module():
     predicted_module = clf.predict(sample_data)
 
     # Inverse transform to get the module name
-    predicted_module = le_module.inverse_transform(predicted_module)
+    predicted_module_name = le_module.inverse_transform(predicted_module)[0]
 
-    # Calculate Total SMV for the predicted module
-    predicted_module_name = predicted_module[0]
+    # Find Total SMV for the predicted module
+    total_smv_for_module = data_set[data_set['Module'] == predicted_module_name]['Total SMV'].mean()
 
-    # Replace 'Module' with the actual column name 'Module'
-    total_smv_for_module = data[data['Module'] == predicted_module_name]['Total SMV'].mean()
+    # Find MAX and MIN SMV for the predicted module
+    max_smv_for_module = data_set[data_set['Module'] == predicted_module_name]['Total SMV'].max()
+    min_smv_for_module = data_set[data_set['Module'] == predicted_module_name]['Total SMV'].min()
 
-    return jsonify({'predicted_module': predicted_module_name, 'total_smv': total_smv_for_module})
+    return jsonify({
+        'predicted_module': predicted_module_name,
+        'total_smv': total_smv_for_module,
+        'max_smv': max_smv_for_module,
+        'min_smv': min_smv_for_module
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
