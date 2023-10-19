@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from joblib import load
 import pandas as pd
+from flask_cors import CORS  # Import CORS from flask_cors
 
 app = Flask(__name__)
+CORS(app, origins="*")
+
 
 # Load the trained model
 model_filename = 'random_forest_model.joblib'
@@ -20,6 +23,8 @@ def predict_module():
     data_set = pd.read_csv('new_dataset_filled.csv')
 
     data = request.get_json()
+    print("Received data:", data)
+
     product_type = data['product_type']
 
     # Encode the 'Product Type' using the LabelEncoder
@@ -47,6 +52,14 @@ def predict_module():
         'max_smv': max_smv_for_module,
         'min_smv': min_smv_for_module
     })
+
+@app.after_request
+def set_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'  # Allow Content-Type header
+    return response
+
 
 if __name__ == '__main__':
     app.run(debug=True)

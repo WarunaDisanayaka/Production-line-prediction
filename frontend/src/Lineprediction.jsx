@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 
 function Lineprediction() {
   const [selectedDesign, setSelectedDesign] = useState('');
   const [predictionResult, setPredictionResult] = useState(null);
 
   const handlePredict = () => {
+    // console.log('design',selectedDesign);
+
     // Make a POST request to the Flask API to get the prediction result based on the selected design
-    axios.post('http://127.0.0.1:5000/predict', { selectedDesign })
-      .then(response => {
+    axios
+    .post('http://127.0.0.1:5000/predict', { product_type: selectedDesign }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+    .then(response => {
         console.log('Prediction Result:', response.data);
-        // Handle the prediction result here (e.g., display the result)
+        // Update the prediction result state with the API response
         setPredictionResult(response.data);
       })
       .catch(error => {
@@ -22,15 +24,19 @@ function Lineprediction() {
 
   return (
     <div className="container mt-4 add-users">
-      <h2>Predict the best line for your design</h2>
+      <h2>Predict the best production line for your design</h2>
       <div className="section">
         <div className="row">
           <div className="col-md-6">
-            <select className="form-control mt-4" value={selectedDesign} onChange={(e) => setSelectedDesign(e.target.value)}>
+            <select
+              className="form-control mt-4"
+              value={selectedDesign}
+              onChange={e => setSelectedDesign(e.target.value)}
+            >
               <option value="">Select your design</option>
-              <option value="Design A">Design A</option>
-              <option value="Design B">Design B</option>
-              <option value="Design C">Design C</option>
+              <option value="Hoody Baselayer">Hoody Baselayer</option>
+              <option value="T-shirt Baselayer">T-shirt Baselayer</option>
+              <option value="T-shirt">T-shirt</option>
               {/* Add more design options here as needed */}
             </select>
           </div>
@@ -44,7 +50,23 @@ function Lineprediction() {
         </div>
       </div>
       {/* Display the prediction result */}
-      
+      {predictionResult && (
+        <div className="mt-4">
+          <h3>Prediction Result:</h3>
+          <p>
+            <strong>Predicted Module:</strong> {predictionResult.predicted_module}
+          </p>
+          <p>
+            <strong>Total SMV:</strong> {predictionResult.total_smv}
+          </p>
+          <p>
+            <strong>Max SMV:</strong> {predictionResult.max_smv}
+          </p>
+          <p>
+            <strong>Min SMV:</strong> {predictionResult.min_smv}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
