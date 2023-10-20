@@ -57,6 +57,9 @@ function Lineprediction() {
             <strong>Best production line:</strong> {predictionResult.predicted_module}
           </p>
           <p>
+            <strong>Most defect type:</strong>Condition of Carton/Inner
+          </p>
+          <p>
             <strong>Max SMV:</strong> {predictionResult.max_smv}
           </p>
           <p>
