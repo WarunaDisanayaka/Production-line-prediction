@@ -54,10 +54,7 @@ function Lineprediction() {
         <div className="mt-4">
           <h3>Prediction Result:</h3>
           <p>
-            <strong>Predicted Module:</strong> {predictionResult.predicted_module}
-          </p>
-          <p>
-            <strong>Total SMV:</strong> {predictionResult.total_smv}
+            <strong>Best production line:</strong> {predictionResult.predicted_module}
           </p>
           <p>
             <strong>Max SMV:</strong> {predictionResult.max_smv}
