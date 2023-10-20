@@ -4,6 +4,9 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app= express();
 app.use(cors(
@@ -18,11 +21,11 @@ app.use(express.json());
 
 // Database connection
 const con = mysql.createConnection({
-    host:"localhost",
-    port:"3308",
-    user:"root",
-    password:"",
-    database:"election"
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 
 });
 
